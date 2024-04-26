@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Charity Support Form</title>
+</head>
+<body>
+<h1>Please Choose a Charity to Support</h1>
+<form id="charityForm">
+    <label>First Name:<input type="text" name="firstName" required></label><br>
+    <label>Last Name:<input type="text" name="lastName" required></label><br>
+    <label>Choose a Charity:
+        <select name="charity" required>
+            <option value="Cancer Society">Cancer Society</option>
+            <option value="March for Dimes">March for Dimes</option>
+            <option value="Safe House Shelters">Safe House Shelters</option>
+            <option value="Homeless Shelter">Homeless Shelter</option>
+            <option value="Keep Paulding Beautiful">Keep Paulding Beautiful</option>
+            <option value="Other">Other</option>
+        </select>
+    </label><br>
+    <input type="text" name="otherCharity" placeholder="Specify if other" style="display:none;">
+    <button type="submit">Submit</button>
+</form>
+
+<script src="https://apis.google.com/js/api.js"></script>
+<script>
+document.querySelector('select[name="charity"]').addEventListener('change', function() {
+    const otherInput = document.querySelector('input[name="otherCharity"]');
+    if (this.value === 'Other') {
+        otherInput.style.display = 'block';
+    } else {
+        otherInput.style.display = 'none';
+    }
+});
+
+document.getElementById('charityForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const firstName = this.firstName.value;
+    const lastName = this.lastName.value;
+    let charity = this.charity.value;
+    if (charity === 'Other') {
+        charity = this.otherCharity.value;
+    }
+
+    // Here you would add the function to insert into Google Sheets
+    addRowToGoogleSheet(firstName, lastName, charity);
+});
+</script>
+<script src="script.js"></script>
+</body>
+</html>
